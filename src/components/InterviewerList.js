@@ -6,8 +6,10 @@ import "components/InterviewerList.scss";
 export default function InterviewerList(props){
     const {interviewers, interviewer, setInterviewer} = props;
 
-    const interviewItems = interviewers.map((interviewObj) => 
-         <InterviewerListItem
+
+    //weird ability to have pass without RETURN or curly brackets.
+    const interviewItems = interviewers.map((interviewObj) => {
+        return <InterviewerListItem
           key={interviewObj.id}
           id={interviewObj.id}
           name={interviewObj.name}
@@ -15,7 +17,7 @@ export default function InterviewerList(props){
           selected={interviewObj.id === interviewer}
           setInterviewer={(event) => setInterviewer(interviewObj.id)}
           />
-)
+})
 
     return (
         <section className="interviewers">
