@@ -4,7 +4,7 @@ import "components/InterviewerList.scss";
 
 
 export default function InterviewerList(props){
-    const {interviewers, interviewer, setInterviewer} = props;
+    const {interviewers, value, onChange} = props;
 
 
     //weird ability to have pass without RETURN or curly brackets.
@@ -14,8 +14,8 @@ export default function InterviewerList(props){
           id={interviewObj.id}
           name={interviewObj.name}
           avatar={interviewObj.avatar}
-          selected={interviewObj.id === interviewer}
-          setInterviewer={(event) => setInterviewer(interviewObj.id)}
+          selected={interviewObj.id === value}
+          setInterviewer={(event) => onChange(interviewObj.id)}
           />
 })
 
