@@ -19,13 +19,12 @@ export function getInterviewersForDay(state, day) {
     return [];
   }
 
-  const interviewersForDay = selectedDay.interviewer.map(
-    (interviewId) => state.interviewer[interviewId] //.interview && state.interviewers[state.appointments[interviewId].interview.interviewer]
+  const interviewersForDay = selectedDay.interviewers.map(
+    (interviewId) => state.interviewers[interviewId] //.interview && state.interviewers[state.appointments[interviewId].interview.interviewer]
   );
 
   return interviewersForDay;
 }
-
 
 export function getInterview(state, interview) {
   if (!interview) {
