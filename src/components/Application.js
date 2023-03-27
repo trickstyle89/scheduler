@@ -12,7 +12,8 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    appointments: {}
+    appointments: {},
+    interviewers:{}
   });
 
   const setDay = (day) => {
@@ -26,18 +27,18 @@ export default function Application(props) {
 
     Promise.all([axios.get(dayURL), axios.get(appointmentURL), axios.get(interviewerURL)])
       .then((all) => {
+        console.log(all);
         setState(prevState => ({ ...prevState, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
       });
   }, []);
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-  // const dailyinterviewers = getInterviewersForDay(state, state.day);
+    const dailyinterviewers = getInterviewersForDay(state, state.day);
 
   
   const schedule = Object.values(state.appointments).map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-    //   const interviewers = getInterviewersForDay(state, state.day);
-
+      const interviewers = dailyinterviewers;
 
     return (
       <Appointment
@@ -45,6 +46,7 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
+        interviewers={interviewers}
       />
     );
   });
@@ -57,8 +59,8 @@ export default function Application(props) {
         <nav className="sidebar__menu">
           <DayList
             days={state.days}
-            day={state.day} //{days} selectedDay
-            setDay={setDay} // onChange
+            day={state.day} 
+            setDay={setDay} 
           />
         </nav>
         <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" alt="Lighthouse Labs" />
