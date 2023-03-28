@@ -1,14 +1,16 @@
 import React from "react";
 import InterviewerListItem from "components/InterviewerListItem";
 import "components/InterviewerList.scss";
+import PropTypes from "prop-types";
 
 
 export default function InterviewerList(props){
-    const {interviewers, value, onChange} = props;
 
+    const {interviewers, value, onChange} = props;
 
     //weird ability to have pass without RETURN or curly brackets.
     const interviewItems = interviewers.map((interviewObj) => {
+
         return <InterviewerListItem
           key={interviewObj.id}
           id={interviewObj.id}
@@ -26,7 +28,10 @@ export default function InterviewerList(props){
         {interviewItems}
         </ul>
       </section>
+      
     );
   }
 
-
+  InterviewerList.propTypes = {
+    interviewers: PropTypes.array.isRequired
+  };

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import axios from '../../node_modules/axios/lib/axios.js';
 import axios from 'axios';
 import "components/Application.scss";
 import DayList from "components/DayList";
@@ -17,6 +16,7 @@ export default function Application(props) {
   });
 
   const setDay = (day) => {
+    console.log('selected day line 20:', day);
     setState({ ...state, day });
   };
 
@@ -27,18 +27,15 @@ export default function Application(props) {
 
     Promise.all([axios.get(dayURL), axios.get(appointmentURL), axios.get(interviewerURL)])
       .then((all) => {
-        console.log(all);
         setState(prevState => ({ ...prevState, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
       });
   }, []);
 
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
-    const dailyinterviewers = getInterviewersForDay(state, state.day);
-
+    const dailyAppointments = getAppointmentsForDay(state, state.day);
+    const dailyinterviewers = getInterviewersForDay(state, state.day)
   
-  const schedule = Object.values(state.appointments).map((appointment) => {
+  const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-      const interviewers = dailyinterviewers;
 
     return (
       <Appointment
@@ -46,7 +43,7 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
-        interviewers={interviewers}
+        interviewers={dailyinterviewers}
       />
     );
   });
@@ -66,9 +63,7 @@ export default function Application(props) {
         <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" alt="Lighthouse Labs" />
       </section>
       <section className="schedule">
-        {dailyAppointments.map(appointment => (
-          <Appointment key={appointment.id} {...appointment} />
-        ))}
+        {schedule}
         <Appointment key="last" time="5pm" />
       </section>
     </main>
