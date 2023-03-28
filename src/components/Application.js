@@ -12,11 +12,35 @@ export default function Application(props) {
     day: "Monday",
     days: [],
     appointments: {},
-    interviewers:{}
+    interviewers: {}
   });
 
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    axios
+      .put(`/api/appointments/${id}`, { interview })
+      .then(() => {
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment
+        };
+
+        setState({
+          ...state,
+          appointments
+        });
+      })
+      .catch(error => console.log(error));
+
+  }
+
+
+
   const setDay = (day) => {
-    console.log('selected day line 20:', day);
     setState({ ...state, day });
   };
 
@@ -31,9 +55,9 @@ export default function Application(props) {
       });
   }, []);
 
-    const dailyAppointments = getAppointmentsForDay(state, state.day);
-    const dailyinterviewers = getInterviewersForDay(state, state.day)
-  
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const dailyinterviewers = getInterviewersForDay(state, state.day)
+
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
 
@@ -44,6 +68,7 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={dailyinterviewers}
+        bookInterview={bookInterview}
       />
     );
   });
@@ -56,8 +81,8 @@ export default function Application(props) {
         <nav className="sidebar__menu">
           <DayList
             days={state.days}
-            day={state.day} 
-            setDay={setDay} 
+            day={state.day}
+            setDay={setDay}
           />
         </nav>
         <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" alt="Lighthouse Labs" />
