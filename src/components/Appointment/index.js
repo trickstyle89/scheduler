@@ -37,6 +37,7 @@ export default function Appointment(props) {
     props
       .bookInterview(props.id, interview)
       .then(() => {
+        console.log("Save success"); // Add this log
         transition(SHOW);
       })
       .catch((error) => {
@@ -45,12 +46,12 @@ export default function Appointment(props) {
       });
   };
 
-  const deleteInterview = (id) => {
+  function onDelete() {
     transition(CONFIRM);
-  };
+  }
 
   function onConfirmDelete() {
-    transition(DELETING);
+    transition(DELETING, true);
 
     props.cancelInterview(props.id)
       .then(() => {
@@ -71,7 +72,7 @@ export default function Appointment(props) {
         <Show
           student={interview.student}
           interviewer={interview.interviewer}
-          onDelete={() => deleteInterview(props.id)}
+          onDelete={() => onDelete(props.id)}
           onEdit={() => transition(EDIT)}
         />
       )}
@@ -97,7 +98,7 @@ export default function Appointment(props) {
         <Confirm
           message="Are you sure you want to delete this appointment?"
           onCancel={() => transition(SHOW)}
-          onConfirm={() => onConfirmDelete()}
+          onConfirm={onConfirmDelete}
         />
       )}
       {mode === ERROR_SAVE && (

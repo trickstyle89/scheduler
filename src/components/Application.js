@@ -24,6 +24,7 @@ export default function Application(props) {
     return axios
       .put(`/api/appointments/${id}`, { interview })
       .then(() => {
+  
         const appointments = {
           ...state.appointments,
           [id]: appointment
@@ -34,7 +35,9 @@ export default function Application(props) {
           appointments
         });
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        return Promise.reject(error);
+    });
   }
 
   function cancelInterview(id) {
@@ -45,6 +48,7 @@ export default function Application(props) {
   
     return axios.delete(`/api/appointments/${id}`)
       .then(() => {
+
         const appointments = {
           ...state.appointments,
           [id]: appointment
@@ -55,7 +59,9 @@ export default function Application(props) {
           appointments
         });
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        return Promise.reject(error);
+     });   
   }
 
   const setDay = (day) => {
