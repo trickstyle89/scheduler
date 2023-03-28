@@ -57,10 +57,6 @@ export default function Application(props) {
       })
       .catch(error => console.log(error));
   }
-  
-
-
-
 
   const setDay = (day) => {
     setState({ ...state, day });

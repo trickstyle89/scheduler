@@ -17,6 +17,7 @@ export default function Appointment(props) {
   const SAVING = "SAVING";
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -25,10 +26,10 @@ export default function Appointment(props) {
   const deleteInterview = (id) => {
     transition(CONFIRM);
   };
-  
+
   function onConfirmDelete() {
     transition(DELETING);
-  
+
     props.cancelInterview(props.id)
       .then(() => {
         transition(EMPTY);
@@ -37,8 +38,7 @@ export default function Appointment(props) {
         console.log("error:", error);
       });
   };
-  
-  
+
 
   return (
     <article className="appointment">
@@ -50,7 +50,7 @@ export default function Appointment(props) {
           student={interview.student}
           interviewer={interview.interviewer}
           onDelete={() => deleteInterview(props.id)}
-          onEdit={props.onEdit}
+          onEdit={() => transition(EDIT)}
         />
       )}
       {mode === CREATE && (
@@ -64,12 +64,34 @@ export default function Appointment(props) {
             };
             transition(SAVING);
             props.bookInterview(props.id, interview)
-            .then(() => {
-              transition(SHOW);
-            })
-            .catch((error) => {
-              console.log("error:", error);
-            });
+              .then(() => {
+                transition(SHOW);
+              })
+              .catch((error) => {
+                console.log("error:", error);
+              });
+          }}
+        />
+      )}
+      {mode === EDIT && (
+        <Form
+          student={interview.student}
+          interviewer={interview.interviewer.id}
+          interviewers={props.interviewers}
+          onCancel={back}
+          onSave={(name, interviewer) => {
+            const interview = {
+              student: name,
+              interviewer,
+            };
+            transition(SAVING);
+            props.bookInterview(props.id, interview)
+              .then(() => {
+                transition(SHOW);
+              })
+              .catch((error) => {
+                console.log("error:", error);
+              });
           }}
         />
       )}
@@ -80,7 +102,7 @@ export default function Appointment(props) {
           message="Are you sure you want to delete this appointment?"
           onCancel={() => transition(SHOW)}
           onConfirm={() => onConfirmDelete()}
-          />
+        />
       )}
     </article>
   );
