@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 function InterviewerList(props){
 
-    const {interviewers, value, onChange} = props;
+    const {interviewers = [], value, onChange} = props;
 
     //weird ability to have pass without RETURN or curly brackets.
     const interviewItems = interviewers.map((interviewObj) => {

@@ -30,21 +30,22 @@ export default function useApplicationData(props) {
     };
 
     function bookInterview(id, interview) {
+        
         const appointment = {
             ...state.appointments[id],
             interview: { ...interview },
         };
 
+        const appointments = {
+            ...state.appointments,
+            [id]: appointment,
+        };
+
+        const days = updateSpots(state, appointments, id);
+
         return axios
             .put(`/api/appointments/${id}`, { interview })
             .then(() => {
-                const appointments = {
-                    ...state.appointments,
-                    [id]: appointment,
-                };
-
-                const days = updateSpots(state, appointments, id);
-
                 setState({
                     ...state,
                     appointments,
@@ -57,21 +58,22 @@ export default function useApplicationData(props) {
     }
 
     function cancelInterview(id) {
+        
         const appointment = {
             ...state.appointments[id],
             interview: null,
         };
 
+        const appointments = {
+            ...state.appointments,
+            [id]: appointment,
+        };
+
+        const days = updateSpots(state, appointments, id);
+
         return axios
             .delete(`/api/appointments/${id}`)
             .then(() => {
-                const appointments = {
-                    ...state.appointments,
-                    [id]: appointment,
-                };
-
-                const days = updateSpots(state, appointments, id);
-
                 setState({
                     ...state,
                     appointments,
