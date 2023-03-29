@@ -9,7 +9,7 @@ function InterviewerList(props){
     const {interviewers = [], value, onChange} = props;
 
     //weird ability to have pass without RETURN or curly brackets.
-    const interviewItems = interviewers.map((interviewObj) => {
+    const interviewItems = interviewers && interviewers.map((interviewObj) => {
 
         return <InterviewerListItem
           key={interviewObj.id}
@@ -17,7 +17,7 @@ function InterviewerList(props){
           name={interviewObj.name}
           avatar={interviewObj.avatar}
           selected={interviewObj.id === value}
-          setInterviewer={(event) => onChange(interviewObj.id)}
+          setInterviewer={(event) => onChange && onChange(interviewObj.id)}
           />
 })
 

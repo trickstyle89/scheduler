@@ -19,7 +19,7 @@ export default function useApplicationData(props) {
         let spots = 0;
 
         for (const id of dayObj.appointments) {
-            if (!appointments[id].interview) {
+            if (!appointments[id].interview && !appointments[id].interview) {
                 spots++;
             }
         }
