@@ -21,8 +21,6 @@ export default function DayListItem(props) {
     }
   };
 
-/* The <li> "day-list__item day-list__item--selected" not updating. */
-
   return (
     <li className={dayClass} onClick={() => props.setDay(props.name)}>
       <h2 className="text--regular">{props.name}</h2>
@@ -30,4 +28,3 @@ export default function DayListItem(props) {
     </li>
   );
 }
-// line 26 issue with props.setDay?  onChange?
