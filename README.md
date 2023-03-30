@@ -2,7 +2,7 @@ Interview Scheduler
 
 Interview Scheduler is a single page application (SPA) built using React. It allows users to book and manage interviews with interviewers. Data is persisted by an API server using a PostgreSQL database, and the client application communicates with the server over HTTP using the JSON format.
 
-![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](public/readme screenshots/Scheduler-App.gif)
+![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](.public/readme screenshots/Scheduler-App.gif)
 
 Getting Started
 
