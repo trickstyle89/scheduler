@@ -30,6 +30,7 @@ export default function Application(props) {
         interviewers={dailyinterviewers}
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
+        data-testid="appointment-form"
       />
     );
   });
