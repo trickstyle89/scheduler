@@ -67,7 +67,7 @@ describe("Application", () => {
     // 3. Click the "Delete" button on the booked appointment.
     const appointment = getAllByTestId(container, "appointment").find(
       appointment => queryByText(appointment, "Archie Cohen")
-    );i
+    );
   
     fireEvent.click(queryByAltText(appointment, "Delete"));
   
